@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tarefas_v1/service_locator.dart';
 import 'package:tarefas_v1/todo.dart';
+import 'package:tarefas_v1/todo_list_controller.dart';
 
 class TodoItemWidget extends StatefulWidget {
   const TodoItemWidget({super.key, required this.todo});
@@ -12,6 +14,7 @@ class TodoItemWidget extends StatefulWidget {
 
 class _TodoItemWidgetState extends State<TodoItemWidget> {
   late TextEditingController todoController;
+  final controller = getIt<TodoListController>();
 
   @override
   void initState() {
@@ -35,17 +38,18 @@ class _TodoItemWidgetState extends State<TodoItemWidget> {
       trailing: IconButton(
         onPressed: onDeleted,
         visualDensity: VisualDensity.compact,
-        icon: Icon(Icons.close_rounded),
+        icon: const Icon(Icons.close_rounded),
       ),
     );
   }
 
   void onChanged(String task) {
     print(task);
+    controller.update(widget.todo.id, task);
   }
 
   void onToggled(_) {
-    print(_);
+    controller.toggle(widget.todo.id);
   }
 
   void onDeleted() {

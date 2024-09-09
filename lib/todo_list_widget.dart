@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:tarefas_v1/todo.dart';
+import 'package:tarefas_v1/service_locator.dart';
 import 'package:tarefas_v1/todo_item_widget.dart';
-
-List<Todo> todoList = [
-  Todo.create("Task 1"),
-  Todo.create("Task 2"),
-  Todo.create("Task 3"),
-  Todo.create("Task 4"),
-  Todo.create("Task 5"),
-];
+import 'package:tarefas_v1/todo_list_controller.dart';
 
 class TodoListWidget extends StatelessWidget {
-  const TodoListWidget({super.key});
+  TodoListWidget({super.key});
+
+  final controller = getIt<TodoListController>();
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      primary: false,
-      shrinkWrap: true,
-      itemCount: todoList.length,
-      itemBuilder: (context, index) {
-        return TodoItemWidget(todo: todoList[index]);
+    return ValueListenableBuilder(
+      valueListenable: controller.todoListNotifier,
+      builder: (context, todoList, child) {
+        return ListView.builder(
+          primary: false,
+          shrinkWrap: true,
+          itemCount: todoList.length,
+          itemBuilder: (context, index) {
+            return TodoItemWidget(todo: todoList[index]);
+          },
+        );
       },
     );
   }
