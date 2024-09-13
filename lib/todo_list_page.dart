@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tarefas_v1/new_todo_widget.dart';
 import 'package:tarefas_v1/todo_list_widget.dart';
 
 class TodoListPage extends StatefulWidget {
@@ -20,6 +21,7 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
       body: ListView(
         children: [
+          const NewTodoWidget(),
           TodoListWidget(),
         ],
       ),
