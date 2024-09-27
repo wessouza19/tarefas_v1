@@ -7,6 +7,12 @@ class TodoListController {
   final todoListNotifier = TodoListNotifier();
   final filterNotifier = ValueNotifier<TodoFilter>(TodoFilter.all);
 
+  void init() {
+    filterNotifier
+        .addListener(() => todoListNotifier.changeFilter(filterNotifier.value));
+    {}
+  }
+
   void add(String task) {
     todoListNotifier.add(Todo.create(task));
   }

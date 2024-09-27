@@ -23,6 +23,12 @@ class _TodoListPageState extends State<TodoListPage> {
   ];
 
   @override
+  void initState() {
+    controller.init();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: tabs.length,
