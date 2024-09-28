@@ -12,34 +12,50 @@ class TodoListNotifier extends ValueNotifier<List<Todo>> {
     Todo.create("Task 4"),
     Todo.create("Task 5"),
   ];
-  final _allTodos = ValueNotifier<List<Todo>>(_initilalValue);
+  final _allTodosNotifier = ValueNotifier<List<Todo>>(_initilalValue);
   TodoFilter _currentFilter = TodoFilter.all;
 
-  List<Todo> get _todos => _allTodos.value;
+  List<Todo> get _todos => _allTodosNotifier.value;
+
+  void init() {
+    _allTodosNotifier.addListener(() => _updateTodoList());
+  }
 
   void add(Todo todo) {
-    value = [...value, todo];
+    _allTodosNotifier.value = [...value, todo];
   }
 
   void update(String id, String task) {
-    value = [
+    _allTodosNotifier.value = [
       for (final todo in value)
         if (todo.id != id) todo else todo.copyWith(task: task)
     ];
   }
 
   void toggle(String id) {
-    value = [
+    _allTodosNotifier.value = [
       for (final todo in value)
         if (todo.id != id) todo else todo.copyWith(completed: !todo.completed)
     ];
   }
 
   void remove(String id) {
-    value = value.where((todo) => todo.id != id).toList();
+    _allTodosNotifier.value = value.where((todo) => todo.id != id).toList();
   }
 
   void changeFilter(TodoFilter filter) {
     _currentFilter = filter;
+    _updateTodoList();
   }
+
+  void _updateTodoList() {
+    value = _mapFilterToTodoList();
+  }
+
+  List<Todo> _mapFilterToTodoList() => switch (_currentFilter) {
+        TodoFilter.incomplete =>
+          _todos.where((todo) => !todo.completed).toList(),
+        TodoFilter.completed => _todos.where((todo) => todo.completed).toList(),
+        _ => _todos
+      };
 }

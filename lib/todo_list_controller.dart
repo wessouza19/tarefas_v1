@@ -8,6 +8,7 @@ class TodoListController {
   final filterNotifier = ValueNotifier<TodoFilter>(TodoFilter.all);
 
   void init() {
+    todoListNotifier.init();
     filterNotifier
         .addListener(() => todoListNotifier.changeFilter(filterNotifier.value));
     {}

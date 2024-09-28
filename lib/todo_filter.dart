@@ -1,5 +1,5 @@
 enum TodoFilter {
   all,
   incomplete,
-  complete,
+  completed,
 }
