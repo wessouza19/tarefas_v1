@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tarefas_v1/service_locator.dart';
-import 'package:tarefas_v1/todo.dart';
+//import 'package:tarefas_v1/todo.dart';
 import 'package:tarefas_v1/todo_list_controller.dart';
 
 class NewTodoWidget extends StatefulWidget {
@@ -48,7 +48,7 @@ class _NewTodoWidgetState extends State<NewTodoWidget> {
       ),
       trailing: TextButton(
         onPressed: onSubmitted,
-        child: Text('Save'),
+        child: const Text('Save'),
       ),
     );
   }
